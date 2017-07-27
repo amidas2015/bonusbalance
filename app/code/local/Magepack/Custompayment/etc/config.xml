@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magepack_Custompayment>
+            <version>0.0.1</version>
+        </Magepack_Custompayment>
+    </modules>
+    <global>
+        <blocks>
+            <custompayment>
+                <class>Magepack_Custompayment_Block</class>
+            </custompayment>
+        </blocks>
+        <models>
+            <custompayment>
+                <class>Magepack_Custompayment_Model</class>
+            </custompayment>
+        </models>
+        <helpers>
+            <custompayment>
+                <class>Magepack_Custompayment_Helper</class>
+            </custompayment>
+        </helpers>
+        <resources>
+            <custompayment_setup>
+                <setup>
+                    <module>Magepack_Custompayment</module>
+                    <class>Mage_Customer_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </custompayment_setup>
+        </resources>
+        <events>
+            <customer_save_before>
+                <observers>
+                    <custompayment>
+                        <type>singleton</type>
+                        <class>custompayment/observer</class>
+                        <method>customerSaveBefore</method>
+                    </custompayment>
+                </observers>
+            </customer_save_before>
+        </events>
+    </global>
+    <default>
+        <payment>
+            <custompayment>
+                <active>1</active>
+                <model>custompayment/pay</model>
+                <order_status>pending</order_status>
+                <title>Custom Payment</title>
+<!--                Authorization, Capture, Order OR Sale
+                    'authorize’, 'authorize_capture’, 'order', 'sale'
+-->
+                <payment_action>authorize_capture</payment_action>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+            </custompayment>
+        </payment>
+    </default>
+</config>

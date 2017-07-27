@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <Magepack_Custompayment>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Payment />
+            </depends>
+        </Magepack_Custompayment>
+    </modules>
+</config>
