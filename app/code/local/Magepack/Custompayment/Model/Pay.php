@@ -12,7 +12,7 @@ class Magepack_Custompayment_Model_Pay extends Mage_Payment_Model_Method_Abstrac
     protected $_formBlockType = 'custompayment/form_custompayment';
 //    protected $_infoBlockType = 'custompayment/info_custompayment';
     protected $_isInitializeNeeded      = false;//
-    protected $_canUseInternal          = false;
+    protected $_canUseInternal          = true;//false
     protected $_canUseForMultishipping  = false;
 
     protected $_isGateway = true;//
@@ -35,7 +35,9 @@ class Magepack_Custompayment_Model_Pay extends Mage_Payment_Model_Method_Abstrac
      */
     public function isAvailable($quote = null)
     {
-        $bonus_balance = $this->customerBonusBalance();
+        $customer_id = $quote->getCustomerId();
+//        $bonus_balance = $this->customerBonusBalance();
+        $bonus_balance = $this->customerBonusBalance($customer_id);
         $grand_total = $quote->getGrandTotal();
 
 //        if(!(int)$bonus_balance)
@@ -56,9 +58,10 @@ class Magepack_Custompayment_Model_Pay extends Mage_Payment_Model_Method_Abstrac
      */
     public function capture(Varien_Object $payment, $amount)
     {
-        $customer = Mage::getSingleton('customer/session')->getCustomer();
+        $customer_id = $payment->getOrder()->getQuote()->getCustomerId();
+        $customer = Mage::getModel('customer/customer')->load($customer_id);
 //        $bonus_balance = $customer->getBonusBalance();
-        $bonus_balance = $this->customerBonusBalance();
+        $bonus_balance = $this->customerBonusBalance($customer_id);
 
         if($amount < 0)
         {
@@ -66,8 +69,6 @@ class Magepack_Custompayment_Model_Pay extends Mage_Payment_Model_Method_Abstrac
         }
         if($amount > $bonus_balance)
         {
-            //Mage::getSingleton('adminhtml/session')->addError($this->__('Your bonus balance is less than the amount of the order'));
-            //$errorMsg = Mage::helper('custompayment')->__('Your bonus balance is less than the amount of the order.');
             Mage::throwException(Mage::helper('custompayment')->__('Your bonus balance is less than the amount of the order.'));
         }
 
@@ -93,8 +94,8 @@ class Magepack_Custompayment_Model_Pay extends Mage_Payment_Model_Method_Abstrac
         $customer_id = Mage::getModel('sales/order')->load($payment->getEntityId())
             ->getCustomerId();
         $customer = Mage::getModel('customer/customer')->load($customer_id);
-
-        $bonus_balance = $customer->getBonusBalance();
+//        $bonus_balance = $customer->getBonusBalance();
+        $bonus_balance = $this->customerBonusBalance($customer_id);
         if($amount < 0)
         {
             Mage::throwException(Mage::helper('custompayment')->__('Invalid amount for refund.'));
@@ -105,9 +106,16 @@ class Magepack_Custompayment_Model_Pay extends Mage_Payment_Model_Method_Abstrac
         return $this;
     }
 
-    public function customerBonusBalance()
+    public function customerBonusBalance($customer_id = null)
     {
-        $customer = Mage::getSingleton('customer/session')->getCustomer();
+        if(is_null($customer_id))
+        {
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
+        }
+        else
+        {
+            $customer = Mage::getModel('customer/customer')->load($customer_id);
+        }
         return $customer->getData('bonus_balance');
     }
 

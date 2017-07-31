@@ -49,14 +49,14 @@
             <custompayment>
                 <active>1</active>
                 <model>custompayment/pay</model>
-                <order_status>pending</order_status>
+                <order_status>processing</order_status>
                 <title>Custom Payment</title>
 <!--                Authorization, Capture, Order OR Sale
                     'authorize’, 'authorize_capture’, 'order', 'sale'
+                <group>offline</group>
 -->
                 <payment_action>authorize_capture</payment_action>
                 <allowspecific>0</allowspecific>
-                <group>offline</group>
             </custompayment>
         </payment>
     </default>
