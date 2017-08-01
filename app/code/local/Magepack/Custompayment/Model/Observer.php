@@ -12,9 +12,8 @@ class Magepack_Custompayment_Model_Observer
     {
           $customer = $observer->getCustomer();
           $default_bonus_balance = Mage::getStoreConfig('custompayment_section/custompayment_group/default_bonus_balance', Mage::app()->getStore());
-          if($default_bonus_balance && $customer->isObjectNew())
-          {
-              $customer = $customer->setBonusBalance($default_bonus_balance);
+          if ($default_bonus_balance && $customer->isObjectNew()) {
+              $customer->setBonusBalance($default_bonus_balance);
           }
     }
 }

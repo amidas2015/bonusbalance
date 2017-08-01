@@ -56,7 +56,7 @@
                 <group>offline</group>
 -->
                 <payment_action>authorize_capture</payment_action>
-                <allowspecific>0</allowspecific>
+                <allowspecific>1</allowspecific>
             </custompayment>
         </payment>
     </default>

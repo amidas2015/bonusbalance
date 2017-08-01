@@ -16,7 +16,6 @@ class Magepack_Custompayment_Block_Form_Custompayment extends Mage_Payment_Block
 
     protected function _customerBonusBalance()
     {
-        return Mage::getModel('custompayment/pay')->customerBonusBalance();
-
+        return Mage::helper('custompayment')->customerBonusBalance();
     }
 }
