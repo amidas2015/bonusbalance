@@ -29,7 +29,6 @@ class Magepack_Customshipping_Model_Carrier
         );
     }
 
-
     /**
      * Collect and get rates
      *
