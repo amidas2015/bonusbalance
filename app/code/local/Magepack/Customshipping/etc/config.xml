@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magepack_Customshipping>
+            <version>0.0.1</version>
+        </Magepack_Customshipping>
+    </modules>
+    <global>
+        <blocks>
+            <customshipping>
+                <class>Magepack_Customshipping_Block</class>
+            </customshipping>
+        </blocks>
+        <models>
+            <customshipping>
+                <class>Magepack_Customshipping_Model</class>
+            </customshipping>
+        </models>
+        <helpers>
+            <customshipping>
+                <class>Magepack_Customshipping_Helper</class>
+            </customshipping>
+        </helpers>
+<!--
+        <resources>
+            <customshipping_setup>
+                <setup>
+                    <module>Magepack_Customshipping</module>
+                    <class>Mage_Customer_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </customshipping_setup>
+        </resources>
+-->
+    </global>
+    <default>
+        <carriers>
+            <customshipping>
+                <active>1</active>
+                <model>customshipping/carrier</model>
+                <title>Custom Shipping</title>
+                <name>Carrier</name>
+                <sort_order>10</sort_order>
+<!-- "Ship to Applicable Countries". It allows you to select the specific countries for which our custom shipping method is applicable -->
+                <sallowspecific>1</sallowspecific>
+                <default_price>1.00</default_price>
+            </customshipping>
+        </carriers>
+    </default>
+</config>
